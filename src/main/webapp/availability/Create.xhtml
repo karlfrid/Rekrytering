@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AvailabilityCreateDlg" widgetVar="AvailabilityCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAvailabilityTitle}">
+            <h:form id="AvailabilityCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{availabilityController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAvailabilityLabel_availabilityId}" for="availabilityId" />
+                        <p:inputText id="availabilityId" value="#{availabilityController.selected.availabilityId}" title="#{bundle.CreateAvailabilityTitle_availabilityId}" required="true" requiredMessage="#{bundle.CreateAvailabilityRequiredMessage_availabilityId}"/>
+                        <p:outputLabel value="#{bundle.CreateAvailabilityLabel_fromDate}" for="fromDate" />
+                        <p:calendar id="fromDate" pattern="MM/dd/yyyy" value="#{availabilityController.selected.fromDate}" title="#{bundle.EditAvailabilityTitle_fromDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateAvailabilityLabel_toDate}" for="toDate" />
+                        <p:calendar id="toDate" pattern="MM/dd/yyyy" value="#{availabilityController.selected.toDate}" title="#{bundle.EditAvailabilityTitle_toDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateAvailabilityLabel_personId}" for="personId" />
+                        <p:selectOneMenu id="personId" value="#{availabilityController.selected.personId}" >
+                            <f:selectItems value="#{personController.itemsAvailableSelectOne}"
+                                           var="personIdItem"
+                                           itemValue="#{personIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{availabilityController.create}" value="#{bundle.Save}" update="display,:AvailabilityListForm:datalist,:growl" oncomplete="handleSubmit(args,'AvailabilityCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AvailabilityCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

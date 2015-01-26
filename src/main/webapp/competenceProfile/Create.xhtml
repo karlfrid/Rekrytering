@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompetenceProfileCreateDlg" widgetVar="CompetenceProfileCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCompetenceProfileTitle}">
+            <h:form id="CompetenceProfileCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{competenceProfileController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCompetenceProfileLabel_competenceProfileId}" for="competenceProfileId" />
+                        <p:inputText id="competenceProfileId" value="#{competenceProfileController.selected.competenceProfileId}" title="#{bundle.CreateCompetenceProfileTitle_competenceProfileId}" required="true" requiredMessage="#{bundle.CreateCompetenceProfileRequiredMessage_competenceProfileId}"/>
+                        <p:outputLabel value="#{bundle.CreateCompetenceProfileLabel_yearsOfExperience}" for="yearsOfExperience" />
+                        <p:inputText id="yearsOfExperience" value="#{competenceProfileController.selected.yearsOfExperience}" title="#{bundle.CreateCompetenceProfileTitle_yearsOfExperience}" />
+                        <p:outputLabel value="#{bundle.CreateCompetenceProfileLabel_competenceId}" for="competenceId" />
+                        <p:selectOneMenu id="competenceId" value="#{competenceProfileController.selected.competenceId}" >
+                            <f:selectItems value="#{competenceController.itemsAvailableSelectOne}"
+                                           var="competenceIdItem"
+                                           itemValue="#{competenceIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCompetenceProfileLabel_personId}" for="personId" />
+                        <p:selectOneMenu id="personId" value="#{competenceProfileController.selected.personId}" >
+                            <f:selectItems value="#{personController.itemsAvailableSelectOne}"
+                                           var="personIdItem"
+                                           itemValue="#{personIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{competenceProfileController.create}" value="#{bundle.Save}" update="display,:CompetenceProfileListForm:datalist,:growl" oncomplete="handleSubmit(args,'CompetenceProfileCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CompetenceProfileCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
